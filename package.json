@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "aws-sdk": "^2.1386.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.7",
+    "axios": "^1.4.0",
+    "esbuild": "^0.17.19",
+    "querystring": "^0.2.1",
+    "serverless": "^3.31.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-esbuild": "^1.45.0",
+    "serverless-offline": "^12.0.4"
+  }
+}

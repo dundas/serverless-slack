@@ -1,0 +1,52 @@
+service: workers
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${opt:region, 'us-east-1'} # Set a default region
+  deploymentBucket:
+    name: serverless-boilerplate
+  apiGateway:
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+  iam:
+    role:
+      name: CodeblocksAdminRole # define the role here
+
+package:
+  individually: true
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    #sourcemap: true
+    target: node19
+    platform: node
+    packager: 'yarn' # Packager that will be used to package your external modules
+    concurrency: 10
+
+functions:
+  test:
+    handler: src/app.handler
+    events:
+      - http:
+          path: /test
+          method: GET
+
+  slackWebhook:
+    handler: src/slack/webhook.handler
+    events:
+      - http:
+          path: /slack/webhook
+          method: POST
